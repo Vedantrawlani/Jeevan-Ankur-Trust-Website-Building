@@ -183,13 +183,34 @@ a.btn-cta:active { transform: translateY(-1px) scale(.995); }
   padding: 14px;
   border-radius: 12px;
   background: linear-gradient(180deg,#fff,#fbfbfb);
-  box-shadow: 0 8px 24px rgba(16,24,40,0.06);
+  box-shadow: var(--shadow-md);
   transition: transform .18s ease, box-shadow .18s ease;
-  cursor: pointer;
 }
 .student-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
 .student-card h4 { margin: 0 0 6px; }
 .student-card p { margin: 0; color: var(--muted); font-size: 13px; }
+
+/* Login form */
+#student-login .form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#student-login input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  font-size: 14px;
+}
+#student-login input:focus {
+  box-shadow: 0 8px 24px rgba(99,102,241,0.08);
+  border-color: #d1d5ff;
+}
+#loginMsg {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
 
 /* Founder section */
 .founder-grid {
@@ -220,20 +241,6 @@ a.btn-cta:active { transform: translateY(-1px) scale(.995); }
   gap: 18px;
   align-items: start;
 }
-.form { display: flex; flex-direction: column; gap: 10px; }
-input[type="text"], input[type="tel"], input[type="number"], select, textarea {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #e6e6e6;
-  font-size: 14px;
-  outline: none;
-  transition: box-shadow .12s ease, transform .12s ease;
-}
-input:focus, textarea:focus, select:focus {
-  box-shadow: 0 8px 24px rgba(99,102,241,0.08);
-  transform: translateY(-2px);
-  border-color: #d1d5ff;
-}
 button.btn-primary {
   background: var(--accent);
   color: #fff;
@@ -242,4 +249,10 @@ button.btn-primary {
   border: 0;
   font-weight: 700;
   cursor: pointer;
+}
+button.btn-primary:hover { background: var(--accent-dark); }
+
+/* Contact */
+.contact-grid { 
+  display: flex; 
 }

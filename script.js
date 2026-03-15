@@ -5,18 +5,30 @@
    - Lightbox for images (foodtime.jpg, "study time.jpg", founder-desk.jpg)
    - Dynamic student card addition from JSON (client-side)
    - Accessibility helpers (keyboard)
+   - Login system for student records
 */
 
 /* ---------- Configuration ---------- */
-/* If you later want to POST to Google Forms or a backend, set FORM_ACTION to that URL.
-   For now it remains '#' to demonstrate local handling. */
 const FORM_ACTION = '#';
 
-/* Sample JSON for students (you can replace or fetch from a file later) */
-const SAMPLE_STUDENTS = [
-  { name: 'Asha', age: 10, cls: '4th', notes: 'Regular attendee' },
-  { name: 'Rohit', age: 12, cls: '6th', notes: 'Needs remedial math' },
-  { name: 'Meera', age: 9, cls: '3rd', notes: 'Excellent in arts' }
+/* Student data (simplified from Excel: Name, Age, Std) */
+const STUDENTS = [
+  { name: "Radhika Chourasiya", age: 12, cls: "4th" },
+  { name: "Sudha Kumari Viru Sha", age: 9, cls: "3rd" },
+  { name: "Naseema Akhtar Shaikh", age: 9, cls: "2nd" },
+  { name: "Anshika Sunil Kumar Chourasiya", age: 8, cls: "3rd" },
+  { name: "Sakshi Dhrup Prakash Chourasiya", age: 11, cls: "4th" },
+  { name: "Sana Shaikh", age: 10, cls: "4th" },
+  { name: "Fathima Sakeel Pathan", age: 12, cls: "6th" },
+  { name: "Mansi Vijay Yadav", age: 9, cls: "4th" },
+  { name: "Shraddha Vinod Ram", age: 10, cls: "4th" },
+  { name: "Krishna Kumar Promod Ram", age: 10, cls: "5th" },
+  { name: "Sachin Rathore", age: 12, cls: "5th" },
+  { name: "Devika Vijay Yadav", age: 12, cls: "7th" },
+  { name: "Jyoti Viru Shah", age: 12, cls: "7th" },
+  { name: "Rithika Vijay Yadav", age: 14, cls: "8th" },
+  { name: "Babli Kumari Viru Shah", age: 13, cls: "9th" }
+  // … add more students from Excel if needed
 ];
 
 /* ---------- DOM Utilities ---------- */
@@ -29,28 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const formMsg = qs('#formMsg');
 
   if (volForm) {
-    // If you want to submit to a real endpoint, set volForm.action = FORM_ACTION;
     volForm.action = FORM_ACTION;
-
     volForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      // Collect form data
       const fd = new FormData(volForm);
       const payload = {};
       fd.forEach((v, k) => payload[k] = v);
 
-      // Local demo: show confirmation and clear
       formMsg.textContent = `Thank you ${payload.name || ''}. Your application has been recorded locally.`;
       formMsg.style.display = 'block';
-
-      // Optionally: send to backend using fetch when FORM_ACTION is set
-      if (FORM_ACTION && FORM_ACTION !== '#') {
-        // Example:
-        // fetch(FORM_ACTION, { method: 'POST', body: fd })
-        //   .then(r => { /* handle response */ })
-        //   .catch(err => { /* handle error */ });
-      }
 
       setTimeout(() => {
         volForm.reset();
@@ -68,18 +67,34 @@ document.addEventListener('DOMContentLoaded', () => {
       if (target) {
         ev.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // update focus for accessibility
         target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
       }
     });
   });
 
-  /* ---------- Populate students grid from SAMPLE_STUDENTS ---------- */
-  const studentsGrid = qs('.students-grid');
-  if (studentsGrid) {
-    // Append sample students (keeps any placeholder cards)
-    SAMPLE_STUDENTS.forEach(s => addStudentCard(s, studentsGrid));
+  /* ---------- Login Handling ---------- */
+  const loginForm = qs('#loginForm');
+  const loginMsg = qs('#loginMsg');
+  const studentsSection = qs('#students');
+  const studentsGrid = qs('#studentsGrid');
+
+  const DEMO_USER = { username: "admin@ngo.com", mobile: "9833761939", password: "12345" };
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = qs('#username').value.trim();
+      const password = qs('#password').value.trim();
+
+      if ((username === DEMO_USER.username || username === DEMO_USER.mobile) && password === DEMO_USER.password) {
+        loginMsg.textContent = "Login successful!";
+        studentsSection.classList.remove('hidden');
+        showStudents(studentsGrid);
+      } else {
+        loginMsg.textContent = "Invalid login credentials.";
+      }
+    });
   }
 
   /* ---------- Lightbox for images ---------- */
@@ -97,25 +112,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/* ---------- Helper: add student card to grid ---------- */
-function addStudentCard(student, container) {
-  const card = document.createElement('article');
-  card.className = 'student-card';
-  card.innerHTML = `
-    <h4>${escapeHtml(student.name)}</h4>
-    <p class="small"><strong>Age:</strong> ${escapeHtml(String(student.age))} &nbsp; <strong>Class:</strong> ${escapeHtml(student.cls)}</p>
-    <p class="small">${escapeHtml(student.notes || '')}</p>
-  `;
-  // Optional: click to open details modal or edit later
-  card.addEventListener('click', () => {
-    alert(`${student.name}\nAge: ${student.age}\nClass: ${student.cls}\nNotes: ${student.notes}`);
+/* ---------- Helper: show student cards ---------- */
+function showStudents(container) {
+  container.innerHTML = "";
+  STUDENTS.forEach(s => {
+    const card = document.createElement('article');
+    card.className = 'student-card';
+    card.innerHTML = `
+      <h4>${escapeHtml(s.name)}</h4>
+      <p class="small"><strong>Age:</strong> ${escapeHtml(String(s.age))} &nbsp; <strong>Class:</strong> ${escapeHtml(s.cls)}</p>
+    `;
+    container.appendChild(card);
   });
-  container.appendChild(card);
 }
 
 /* ---------- Lightbox Implementation ---------- */
 function initLightbox() {
-  // Create lightbox element
   const lb = document.createElement('div');
   lb.className = 'lightbox';
   lb.innerHTML = `
@@ -129,14 +141,10 @@ function initLightbox() {
   const lbImg = lb.querySelector('img');
   const lbCaption = lb.querySelector('.caption');
 
-  // Images that should open lightbox: select by class names used in HTML
   const selectors = ['.hero-img', '.founder-img'];
   qsa(selectors.join(',')).forEach(img => {
     img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-      openLightbox(img);
-    });
-    // keyboard support
+    img.addEventListener('click', () => openLightbox(img));
     img.setAttribute('tabindex', '0');
     img.addEventListener('keydown', (ev) => {
       if (ev.key === 'Enter' || ev.key === ' ') {
@@ -146,7 +154,6 @@ function initLightbox() {
     });
   });
 
-  // Close on click outside or Esc
   lb.addEventListener('click', (ev) => {
     if (ev.target === lb) closeLightbox();
   });
@@ -169,7 +176,7 @@ function initLightbox() {
   }
 }
 
-/* ---------- Utility: escape HTML to avoid injection ---------- */
+/* ---------- Utility: escape HTML ---------- */
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
