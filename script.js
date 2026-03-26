@@ -1,187 +1,100 @@
-/* script.js
-   Full JavaScript for Jeevan Ankur Trust frontend
-   - Handles volunteer form (local demo + optional Google Form integration)
-   - Smooth scrolling for internal links
-   - Lightbox for images (foodtime.jpg, "study time.jpg", founder-desk.jpg)
-   - Dynamic student card addition from JSON (client-side)
-   - Accessibility helpers (keyboard)
-   - Login system for student records
-*/
-
-/* ---------- Configuration ---------- */
-const FORM_ACTION = '#';
-
-/* Student data (simplified from Excel: Name, Age, Std) */
-const STUDENTS = [
-  { name: "Radhika Chourasiya", age: 12, cls: "4th" },
-  { name: "Sudha Kumari Viru Sha", age: 9, cls: "3rd" },
-  { name: "Naseema Akhtar Shaikh", age: 9, cls: "2nd" },
-  { name: "Anshika Sunil Kumar Chourasiya", age: 8, cls: "3rd" },
-  { name: "Sakshi Dhrup Prakash Chourasiya", age: 11, cls: "4th" },
-  { name: "Sana Shaikh", age: 10, cls: "4th" },
-  { name: "Fathima Sakeel Pathan", age: 12, cls: "6th" },
-  { name: "Mansi Vijay Yadav", age: 9, cls: "4th" },
-  { name: "Shraddha Vinod Ram", age: 10, cls: "4th" },
-  { name: "Krishna Kumar Promod Ram", age: 10, cls: "5th" },
-  { name: "Sachin Rathore", age: 12, cls: "5th" },
-  { name: "Devika Vijay Yadav", age: 12, cls: "7th" },
-  { name: "Jyoti Viru Shah", age: 12, cls: "7th" },
-  { name: "Rithika Vijay Yadav", age: 14, cls: "8th" },
-  { name: "Babli Kumari Viru Shah", age: 13, cls: "9th" }
-  // … add more students from Excel if needed
+const students = [
+  {name:"Anshika Chourasiya", age:8, class:"3rd", gender:"Female"},
+  {name:"Sana Shaikh", age:10, class:"4th", gender:"Female"},
+  {name:"Radhika Chourasiya", age:12, class:"4th", gender:"Female"},
+  {name:"Krishna Ram", age:10, class:"5th", gender:"Male"},
+  {name:"Sachin Rathore", age:12, class:"5th", gender:"Male"},
+  {name:"Devika Yadav", age:12, class:"7th", gender:"Female"},
+  {name:"Rithika Yadav", age:14, class:"8th", gender:"Female"}
 ];
 
-/* ---------- DOM Utilities ---------- */
-function qs(sel, ctx = document) { return ctx.querySelector(sel); }
-function qsa(sel, ctx = document) { return Array.from(ctx.querySelectorAll(sel)); }
-
-/* ---------- Volunteer Form Handling ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  const volForm = qs('#volForm');
-  const formMsg = qs('#formMsg');
-
-  if (volForm) {
-    volForm.action = FORM_ACTION;
-    volForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const fd = new FormData(volForm);
-      const payload = {};
-      fd.forEach((v, k) => payload[k] = v);
-
-      formMsg.textContent = `Thank you ${payload.name || ''}. Your application has been recorded locally.`;
-      formMsg.style.display = 'block';
-
-      setTimeout(() => {
-        volForm.reset();
-        formMsg.style.display = 'none';
-      }, 4500);
-    });
-  }
-
-  /* ---------- Smooth scroll for internal links ---------- */
-  qsa('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', (ev) => {
-      const href = link.getAttribute('href');
-      if (!href || href === '#') return;
-      const target = document.querySelector(href);
-      if (target) {
-        ev.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        target.setAttribute('tabindex', '-1');
-        target.focus({ preventScroll: true });
-      }
-    });
-  });
-
-  /* ---------- Login Handling ---------- */
-  const loginForm = qs('#loginForm');
-  const loginMsg = qs('#loginMsg');
-  const studentsSection = qs('#students');
-  const studentsGrid = qs('#studentsGrid');
-
-  const DEMO_USER = { username: "admin@ngo.com", mobile: "9833761939", password: "12345" };
-
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const username = qs('#username').value.trim();
-      const password = qs('#password').value.trim();
-
-      if ((username === DEMO_USER.username || username === DEMO_USER.mobile) && password === DEMO_USER.password) {
-        loginMsg.textContent = "Login successful!";
-        studentsSection.classList.remove('hidden');
-        showStudents(studentsGrid);
-      } else {
-        loginMsg.textContent = "Invalid login credentials.";
-      }
-    });
-  }
-
-  /* ---------- Lightbox for images ---------- */
-  initLightbox();
-
-  /* ---------- Keyboard accessibility for clickable cards ---------- */
-  qsa('.student-card').forEach(card => {
-    card.setAttribute('tabindex', '0');
-    card.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Enter' || ev.key === ' ') {
-        ev.preventDefault();
-        card.click();
-      }
-    });
-  });
-});
-
-/* ---------- Helper: show student cards ---------- */
-function showStudents(container) {
-  container.innerHTML = "";
-  STUDENTS.forEach(s => {
-    const card = document.createElement('article');
-    card.className = 'student-card';
-    card.innerHTML = `
-      <h4>${escapeHtml(s.name)}</h4>
-      <p class="small"><strong>Age:</strong> ${escapeHtml(String(s.age))} &nbsp; <strong>Class:</strong> ${escapeHtml(s.cls)}</p>
-    `;
-    container.appendChild(card);
-  });
+function getSurname(name){
+  return name.split(" ").slice(-1)[0]; // last word
 }
 
-/* ---------- Lightbox Implementation ---------- */
-function initLightbox() {
-  const lb = document.createElement('div');
-  lb.className = 'lightbox';
-  lb.innerHTML = `
-    <div class="lb-inner" role="dialog" aria-modal="true" aria-label="Image preview">
-      <img src="" alt="" />
-      <div class="caption"></div>
+const loginForm = document.getElementById("loginForm");
+const msg = document.getElementById("loginMsg");
+const section = document.getElementById("students");
+const grid = document.getElementById("studentsGrid");
+
+loginForm.addEventListener("submit",(e)=>{
+  e.preventDefault();
+
+  msg.innerText="Login Successful";
+  section.classList.remove("hidden");
+
+  // SORT BY SURNAME
+  students.sort((a,b)=>{
+    return getSurname(a.name).localeCompare(getSurname(b.name));
+  });
+
+  // SEPARATE MALE & FEMALE
+  const males = students.filter(s => s.gender === "Male");
+  const females = students.filter(s => s.gender === "Female");
+
+  grid.innerHTML = `
+    <div class="student-column">
+      <h3>Male Students</h3>
+      ${males.map(s => `
+        <div class="student-card">
+          <h4>${s.name}</h4>
+          <p>Age: ${s.age}</p>
+          <p>Class: ${s.class}</p>
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="student-column">
+      <h3> Female Students</h3>
+      ${females.map(s => `
+        <div class="student-card">
+          <h4>${s.name}</h4>
+          <p>Age: ${s.age}</p>
+          <p>Class: ${s.class}</p>
+        </div>
+      `).join("")}
     </div>
   `;
-  document.body.appendChild(lb);
+});
 
-  const lbImg = lb.querySelector('img');
-  const lbCaption = lb.querySelector('.caption');
 
-  const selectors = ['.hero-img', '.founder-img'];
-  qsa(selectors.join(',')).forEach(img => {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => openLightbox(img));
-    img.setAttribute('tabindex', '0');
-    img.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Enter' || ev.key === ' ') {
-        ev.preventDefault();
-        openLightbox(img);
-      }
-    });
+
+/* Volunteer Form */
+document.getElementById("volForm").addEventListener("submit",(e)=>{
+  e.preventDefault();
+  document.getElementById("formMsg").innerText="Application Submitted!";
+});
+
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (pageYOffset >= sectionTop) {
+      current = section.getAttribute("id");
+    }
   });
 
-  lb.addEventListener('click', (ev) => {
-    if (ev.target === lb) closeLightbox();
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === "#" + current) {
+      link.classList.add("active");
+    }
   });
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape') closeLightbox();
-  });
-
-  function openLightbox(imgEl) {
-    lbImg.src = imgEl.src;
-    lbImg.alt = imgEl.alt || '';
-    lbCaption.textContent = imgEl.closest('figure')?.querySelector('figcaption')?.textContent || '';
-    lb.classList.add('open');
-    lb.setAttribute('tabindex', '-1');
-    lb.focus();
-  }
-  function closeLightbox() {
-    lb.classList.remove('open');
-    lbImg.src = '';
-    lbCaption.textContent = '';
-  }
+});
+window.addEventListener("load", () => {
+  document.getElementById("loader").classList.add("hidden");
+});
+//LOADER NOT IMP IN CSS AND IN JS
+function toggleMode(){
+  document.body.classList.toggle("dark");
 }
-
-/* ---------- Utility: escape HTML ---------- */
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
+window.addEventListener("scroll", ()=>{
+  document.querySelectorAll(".fade").forEach(el=>{
+    const top = el.getBoundingClientRect().top;
+    if(top < window.innerHeight - 50){
+      el.classList.add("show");
+    }
+  });
+});
