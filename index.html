@@ -32,6 +32,8 @@
     <a href="#donation">Donation</a>
     <a href="#volunteer">Volunteer</a>
     <a href="#contact">Contact</a>
+    <a href="#founder">Founder</a>
+    <a href="#other">Other</a>
     <button onclick="toggleMode()" class="dark-btn">🌙</button>
   </nav>
 
@@ -43,7 +45,35 @@
   </div>
 </section>
 
-<main class="container">
+<div id="founder" class="card founder-section fade">
+
+  <h2>From the Founder’s Desk</h2>
+
+  <div class="founder-container">
+
+    <div class="founder-text">
+      <p>
+        At our organization, we believe every student deserves quality education and the right guidance to succeed in life.
+      </p>
+
+      <p>
+        With the help of passionate volunteers and kind-hearted donors, we are working to support students by providing learning resources, mentorship, and opportunities.
+      </p>
+
+      <p>
+        Together, we can uplift young minds and build a brighter future for society.
+      </p>
+
+      <h4>— Babu Sir</h4>
+    </div>
+
+    <div class="founder-image">
+      <img src="babusir.jpeg" alt="Babu Sir">
+    </div>
+
+  </div>
+
+</div>
 
 <!-- ABOUT -->
 <section id="about" class="card">
@@ -107,6 +137,46 @@
       <p><strong>Account Type:</strong> Current</p>
   </div>
 </section>
+<div id="other" class="card">
+  
+  <h2>Other Contributions</h2>
+
+  <p class="other-note">
+    You can also support students by donating useful items like clothes, books, stationery, school bags, or any educational materials.
+  </p>
+
+  <form id="otherForm">
+
+    <div class="input-box">
+     <div class="input-box">
+  <select required>
+    <option value="">Select Item</option>
+    <option>Books</option>
+    <option>Clothes</option>
+    <option>Stationery</option>
+    <option>School Bags</option>
+    <option>Other</option>
+  </select>
+</div>
+    </div>
+    <div class="input-box">
+  <input type="number" placeholder="Quantity (e.g. 5 books, 2 bags)" min="1" required>
+</div>
+<div class="input-box">
+  <input type="text" placeholder="Donor Name" required>
+</div>
+
+    <div class="input-box">
+      <input type="text" placeholder="Contact Number" required>
+    </div>
+
+ 
+
+    <button class="btn-primary">Submit</button>
+
+  </form>
+
+</div>
 
 <!-- OLD AGE HOME -->
 <section class="card">
@@ -124,12 +194,11 @@ Through dedicated staff and a nurturing environment, we aim to bring comfort, ca
 <section id="volunteer" class="card">
   <h2>Volunteer / Internship</h2>
 
+<p class="volunteer-note">
+  <strong>Note:</strong> This volunteer form is specifically for individuals who wish to teach and support students in their studies. If you are interested in guiding, mentoring, or helping students academically, please fill out this form to join as a volunteer educator.
+</p>
 
-  <div class="volunteer-box">
-
-  <p>Join us as a volunteer or intern and make a difference.</p>
-
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSc3csM86l5NaGsyl5ms2oXF2Rxh38m4GuxrtxXSv2c8saBSqg/viewform"
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSc3csM86l5NaGsyl5ms2oXF2Rxh38m4GuxrtxXSv2c8saBSqg/viewform?usp=sharing&ouid=108154461314433714268"
      target="_blank"
      class="btn-primary">
      Apply Now
@@ -190,7 +259,19 @@ Through dedicated staff and a nurturing environment, we aim to bring comfort, ca
 <footer class="footer">
   © Jeevan Ankur Trust 2026
 </footer>
+<script>
+const faders = document.querySelectorAll('.fade');
 
+window.addEventListener('scroll', () => {
+  faders.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      el.classList.add('show');
+    }
+  });
+});
+</script>
 <script src="script.js"></script>
+
 </body>
 </html>

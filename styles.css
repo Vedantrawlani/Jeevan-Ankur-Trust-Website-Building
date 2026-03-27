@@ -560,3 +560,72 @@ body {
   transform: scale(1.05);
   filter: brightness(0.9);
 }
+.volunteer-note {
+  background: #fff3e6;
+  color: #333;
+  padding: 15px 18px;
+  border-left: 5px solid orange;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+/* OTHER SECTION */
+.other-note {
+  background: #e6f7ff;
+  padding: 12px 15px;
+  border-left: 4px solid #2196f3;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.input-box select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* MATCHING CARD LAYOUT */
+.founder-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* TEXT */
+.founder-text {
+  flex: 2;
+}
+
+/* IMAGE */
+.founder-image {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.founder-image img {
+  width: 220px;
+  border-radius: 12px;
+  object-fit: cover;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.founder-image img:hover {
+  transform: scale(1.05);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .founder-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .founder-image {
+    justify-content: center;
+  }
+}
