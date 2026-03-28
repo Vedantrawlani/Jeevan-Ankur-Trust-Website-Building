@@ -1,77 +1,88 @@
-const students = [
-  {name:"Anshika Chourasiya", age:8, class:"3rd", gender:"Female"},
-  {name:"Sana Shaikh", age:10, class:"4th", gender:"Female"},
-  {name:"Radhika Chourasiya", age:12, class:"4th", gender:"Female"},
-  {name:"Krishna Ram", age:10, class:"5th", gender:"Male"},
-  {name:"Sachin Rathore", age:12, class:"5th", gender:"Male"},
-  {name:"Devika Yadav", age:12, class:"7th", gender:"Female"},
-  {name:"Rithika Yadav", age:14, class:"8th", gender:"Female"}
-];
+document.addEventListener("DOMContentLoaded", function(){
 
-function getSurname(name){
-  return name.split(" ").slice(-1)[0]; // last word
-}
+  const students = [
+    {name:"Anshika Chourasiya", age:8, class:"3rd", gender:"Female"},
+    {name:"Sana Shaikh", age:10, class:"4th", gender:"Female"},
+    {name:"Radhika Chourasiya", age:12, class:"4th", gender:"Female"},
+    {name:"Krishna Ram", age:10, class:"5th", gender:"Male"},
+    {name:"Sachin Rathore", age:12, class:"5th", gender:"Male"},
+    {name:"Devika Yadav", age:12, class:"7th", gender:"Female"},
+    {name:"Rithika Yadav", age:14, class:"8th", gender:"Female"}
+  ];
 
-const loginForm = document.getElementById("loginForm");
-const msg = document.getElementById("loginMsg");
-const section = document.getElementById("students");
-const grid = document.getElementById("studentsGrid");
+  function getSurname(name){
+    return name.split(" ").slice(-1)[0];
+  }
 
-loginForm.addEventListener("submit",(e)=>{
-  e.preventDefault();
+  const loginForm = document.getElementById("loginForm");
+  const msg = document.getElementById("loginMsg");
+  const section = document.getElementById("students");
+  const grid = document.getElementById("studentsGrid");
 
-  msg.innerText="Login Successful";
-  section.classList.remove("hidden");
+  if(loginForm){
+    loginForm.addEventListener("submit",(e)=>{
+      e.preventDefault();
 
-  // SORT BY SURNAME
-  students.sort((a,b)=>{
-    return getSurname(a.name).localeCompare(getSurname(b.name));
-  });
+      msg.innerText="Login Successful";
+      section.classList.remove("hidden");
 
-  // SEPARATE MALE & FEMALE
-  const males = students.filter(s => s.gender === "Male");
-  const females = students.filter(s => s.gender === "Female");
+      students.sort((a,b)=>{
+        return getSurname(a.name).localeCompare(getSurname(b.name));
+      });
 
-  grid.innerHTML = `
-    <div class="student-column">
-      <h3>Male Students</h3>
-      ${males.map(s => `
-        <div class="student-card">
-          <h4>${s.name}</h4>
-          <p>Age: ${s.age}</p>
-          <p>Class: ${s.class}</p>
+      const males = students.filter(s => s.gender === "Male");
+      const females = students.filter(s => s.gender === "Female");
+
+      grid.innerHTML = `
+        <div class="student-column">
+          <h3>Male Students</h3>
+          ${males.map(s => `
+            <div class="student-card">
+              <h4>${s.name}</h4>
+              <p>Age: ${s.age}</p>
+              <p>Class: ${s.class}</p>
+            </div>
+          `).join("")}
         </div>
-      `).join("")}
-    </div>
 
-    <div class="student-column">
-      <h3> Female Students</h3>
-      ${females.map(s => `
-        <div class="student-card">
-          <h4>${s.name}</h4>
-          <p>Age: ${s.age}</p>
-          <p>Class: ${s.class}</p>
+        <div class="student-column">
+          <h3>Female Students</h3>
+          ${females.map(s => `
+            <div class="student-card">
+              <h4>${s.name}</h4>
+              <p>Age: ${s.age}</p>
+              <p>Class: ${s.class}</p>
+            </div>
+          `).join("")}
         </div>
-      `).join("")}
-    </div>
-  `;
-});
+      `;
+    });
+  }
 
+  /* Volunteer Form */
+  const volForm = document.getElementById("volForm");
+  if(volForm){
+    volForm.addEventListener("submit",(e)=>{
+      e.preventDefault();
+      document.getElementById("formMsg").innerText="Application Submitted!";
+    });
+  }
 
+  /* NAV ACTIVE */
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".main-nav a");
 
-/* Volunteer Form */
-document.getElementById("volForm").addEventListener("submit",(e)=>{
-  e.preventDefault();
-  document.getElementById("formMsg").innerText="Application Submitted!";
-});
-
-
-window.addEventListener("scroll", () => {
+  window.addEventListener("scroll", () => {
   let current = "";
 
   sections.forEach(section => {
-    const sectionTop = section.offsetTop - 100;
-    if (pageYOffset >= sectionTop) {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+
+    if (
+      pageYOffset >= sectionTop - 150 &&
+      pageYOffset < sectionTop + sectionHeight
+    ) {
       current = section.getAttribute("id");
     }
   });
@@ -83,18 +94,35 @@ window.addEventListener("scroll", () => {
     }
   });
 });
-window.addEventListener("load", () => {
-  document.getElementById("loader").classList.add("hidden");
+
+  /* ITEM SELECT (MAIN FEATURE 🔥) */
+  const itemSelect = document.getElementById("itemSelect");
+  const itemNameBox = document.getElementById("itemNameBox");
+
+  if(itemSelect){
+    itemSelect.addEventListener("change", function(){
+
+      console.log("Selected:", this.value);
+
+      if(this.value === "Other"){
+        itemNameBox.style.display = "block";
+      } else {
+        itemNameBox.style.display = "none";
+      }
+
+    });
+  }
+
 });
-//LOADER NOT IMP IN CSS AND IN JS
+
+/* OUTSIDE (OK) */
 function toggleMode(){
   document.body.classList.toggle("dark");
 }
-window.addEventListener("scroll", ()=>{
-  document.querySelectorAll(".fade").forEach(el=>{
-    const top = el.getBoundingClientRect().top;
-    if(top < window.innerHeight - 50){
-      el.classList.add("show");
-    }
-  });
-});
+
+function toggleMenu(){
+  document.querySelector(".main-nav").classList.toggle("show");
+}
+window.onload = function(){
+  window.scrollTo(0,0);
+}

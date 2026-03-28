@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="styles.css" />
 <link rel="icon" type="image/png" href="header_logo.jpg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -16,6 +17,7 @@
 </div>
 <div id="loader" class="loader hidden">Loading...</div>
 <header class="site-header">
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
   <div class="left">
     <img src="logo.png" class="logo-img">
@@ -148,36 +150,34 @@
   <form id="otherForm">
 
     <div class="input-box">
-     <div class="input-box">
-  <select required>
+  <select id="itemSelect" required>
     <option value="">Select Item</option>
-    <option>Books</option>
-    <option>Clothes</option>
-    <option>Stationery</option>
-    <option>School Bags</option>
-    <option>Other</option>
+    <option value="Books">Books</option>
+    <option value="Clothes">Clothes</option>
+    <option value="Stationery">Stationery</option>
+    <option value="School Bags">School Bags</option>
+    <option value="Other">Other</option>
   </select>
 </div>
-    </div>
-    <div class="input-box">
+
+<!-- 🔥 ITEM NAME FIELD -->
+<div class="input-box" id="itemNameBox" style="display:none;">
+  <input type="text" placeholder="Enter Item Name">
+</div>
+
+<div class="input-box">
   <input type="number" placeholder="Quantity (e.g. 5 books, 2 bags)" min="1" required>
 </div>
+
 <div class="input-box">
   <input type="text" placeholder="Donor Name" required>
 </div>
 
-    <div class="input-box">
-      <input type="text" placeholder="Contact Number" required>
-    </div>
-
- 
-
-    <button class="btn-primary">Submit</button>
-
-  </form>
-
+<div class="input-box">
+  <input type="text" placeholder="Contact Number" required>
 </div>
 
+<button class="btn-primary">Submit</button>
 <!-- OLD AGE HOME -->
 <section class="card">
   <h2>Old Age Home</h2>
@@ -198,7 +198,7 @@ Through dedicated staff and a nurturing environment, we aim to bring comfort, ca
   <strong>Note:</strong> This volunteer form is specifically for individuals who wish to teach and support students in their studies. If you are interested in guiding, mentoring, or helping students academically, please fill out this form to join as a volunteer educator.
 </p>
 
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSc3csM86l5NaGsyl5ms2oXF2Rxh38m4GuxrtxXSv2c8saBSqg/viewform?usp=sharing&ouid=108154461314433714268"
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSc3csM86l5NaGsyl5ms2oXF2Rxh38m4GuxrtxXSv2c8saBSqg/viewform?usp=header"
      target="_blank"
      class="btn-primary">
      Apply Now
@@ -252,7 +252,16 @@ Through dedicated staff and a nurturing environment, we aim to bring comfort, ca
 
   </div>
 </section>
+<div class="social-container">
+  <h3>Connect With Us</h3>
 
+  <div class="social-icons">
+    <a href="https://www.instagram.com/jeevan_ankur_trust/" target="_blank" class="social instagram">
+      <i class="fab fa-instagram"></i>
+      <span>@jeevan_ankur_trust</span>
+    </a>
+  </div>
+</div>
 
 </main>
 
@@ -271,7 +280,8 @@ window.addEventListener('scroll', () => {
   });
 });
 </script>
-<script src="script.js"></script>
 
+
+<script src="script.js"></script>
 </body>
 </html>
