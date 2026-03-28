@@ -5,7 +5,10 @@ html {
 /* PREMIUM BACKGROUND */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+img {
+  max-width: 100%;
+  height: auto;
+}
 
   background: linear-gradient(
     135deg,
@@ -337,6 +340,11 @@ section {
     align-items: center;
     text-align: center;
   }
+  @media (max-width: 768px){
+  .site-header {
+    padding: 10px 15px;   /* 🔥 reduce padding */
+  }
+}
 
   .left {
     flex-direction: column;
@@ -379,9 +387,11 @@ section {
     grid-template-columns: 1fr;
   }
 
+@media (max-width: 768px){
   .media-grid img {
-    height: 180px;
+    height: auto;
   }
+}
 
   /* STUDENTS SECTION */
   .students-grid {
@@ -402,10 +412,11 @@ section {
     width: 100%;
   }
 
+@media (max-width: 768px){
   .btn-primary {
-    width: 100%;
+    width: auto;
   }
-
+}
   /* CONTACT SECTION */
   @media (max-width: 768px){
 
@@ -822,4 +833,11 @@ section {
     text-align: center;
   }
 
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
 }
