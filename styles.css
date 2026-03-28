@@ -1,14 +1,13 @@
 html {
   scroll-behavior: smooth;
 }
+html, body {
+  overflow-x: hidden;
+}
 
 /* PREMIUM BACKGROUND */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-img {
-  max-width: 100%;
-  height: auto;
-}
 
   background: linear-gradient(
     135deg,
@@ -19,6 +18,11 @@ img {
 
   min-height: 100vh;
 }
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -125,7 +129,7 @@ body::before {
 /* INPUT BOX */
 .input-box {
   flex: 1;                /* equal width */
-  min-width: 200px;
+  min-width: 0;
 }
 
 .input-box input {
