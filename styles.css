@@ -815,9 +815,7 @@ section {
     border-radius: 10px;
   }
 
-  .main-nav.show {
-    display: flex;
-  }
+
 
   .main-nav a {
     width: 100%;
@@ -844,4 +842,51 @@ section {
 
 body {
   overflow-x: hidden;
+}
+/* CONTACT GRID FIX */
+.contact-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cards in one row */
+  gap: 15px;
+  padding: 10px;
+}
+
+/* Each card */
+.contact-card {
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+/* MOBILE VIEW FIX */
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr 1fr; /* 2 columns */
+    gap: 12px;
+  }
+
+  .contact-card {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .contact-card h3 {
+    font-size: 16px;
+  }
+
+  .contact-card p {
+    font-size: 14px;
+    word-break: break-word; /* avoid overflow */
+  }
+}
+  /*.main-nav.show {
+    display: flex;
+  }*/
+  .contact-card {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
 }
