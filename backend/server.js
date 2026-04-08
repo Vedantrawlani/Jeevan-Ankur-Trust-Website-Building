@@ -3,22 +3,37 @@ const cors = require("cors");
 
 const app = express();
 
+// middleware
 app.use(cors());
 app.use(express.json());
 
+// routes
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
 app.post("/volunteer", (req, res) => {
-  console.log(req.body);
+  console.log("Volunteer Data:", req.body);
   res.send("Form data received");
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
 app.post("/donate", (req, res) => {
-  console.log(req.body);
+  console.log("Donation Data:", req.body);
   res.send("Donation received");
+});
+
+// server start
+app.listen(5000, () => {
+  console.log("Server running on http://localhost:5000");
+});
+let students = [
+  { name: "Anshika", age: 8, class: "3rd", gender: "Female" }
+];
+app.get("/students", (req, res) => {
+  res.json(students);
+});
+app.post("/add-student", (req, res) => {
+  const newStudent = req.body;
+  students.push(newStudent);
+  res.send("Student added");
 });

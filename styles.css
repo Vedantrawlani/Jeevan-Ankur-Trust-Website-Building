@@ -1,10 +1,11 @@
 html {
   scroll-behavior: smooth;
 }
-html, body {
+body {
   overflow-x: hidden;
-  width:100%;
+
 }
+
 
 /* PREMIUM BACKGROUND */
 body {
@@ -78,6 +79,7 @@ body::before {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 
@@ -177,7 +179,7 @@ a.btn-primary {
 
 .btn-primary:hover {
   background: #2196f3!important;
-  transform: scale(1.05);
+
 }
 
 
@@ -227,9 +229,7 @@ section {
   width: 100%;
 }
 
-.media-grid img:hover {
-  transform: scale(1.05);
-}
+
 
 /* STUDENTS */
 .student-column {
@@ -377,11 +377,7 @@ section {
     background: #f5f5f5;
   }
 }
-.hero{
-  position:relative;
-  z-index: 1;
 
-}
 
   /* HEADER */
   .site-header {
@@ -415,9 +411,6 @@ section {
   }
 
   /* HERO SECTION */
-  .hero {
-    height: 250px;
-  }
 
   .hero-overlay h1 {
     font-size: 24px;
@@ -502,55 +495,10 @@ section {
   }
 
 
-/* HERO SECTION */
-.hero {
-  position: relative;
-  height: 400px;
 
-  background: url("bcg.jpg") center/cover no-repeat;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /*overflow: hidden;*/
-}
-
-/* ADD THIS NEW */
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  background: url("bcg.jpg") center/cover no-repeat;
-
-  animation: zoomBg 10s infinite alternate ease-in-out;
-  z-index: -1;
-}
-.hero {
-  height: 400px;
-  animation: bgSlide 25s infinite;
-  background-size: cover;
-  background-position: center;
-}
-
-@keyframes bgSlide {
-  0%   { background-image: url("bcg.jpg"); }
-  33%  { background-image: url("study time.jpg"); }
-  66%  { background-image: url("founder-desk.jpg"); }
-  100% { background-image: url("foodtime.jpg"); }
-}
 /* ANIMATION */
-@keyframes zoomBg {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.1);
-  }
-}
+
 /* DARK OVERLAY */
 .hero::before {
   content: "";
@@ -684,9 +632,9 @@ section {
   100% { transform: rotate(360deg); }
 }
 .fade {
-  opacity: 1;
-  transform: none;
-  transition: all 0.6s ease;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:0.6s;
 }
 
 .fade.show {
@@ -698,7 +646,7 @@ section {
 }
 
 .media-grid img:hover {
-  transform: scale(1.05);
+ 
   filter: brightness(0.9);
 }
 .volunteer-note {
@@ -758,9 +706,7 @@ section {
   transition: 0.3s;
 }
 
-.founder-image img:hover {
-  transform: scale(1.05);
-}
+
 .founder-section {
   transition: 0.3s;
 }
@@ -968,9 +914,7 @@ body.dark .contact-card {
   transition: 0.4s;
 }
 
-.media img:hover {
-  transform: scale(1.08);
-}
+
 .loader {
   position: fixed;
   width: 100%;
@@ -1001,7 +945,7 @@ body.dark .contact-card {
 }
 p{
   overflow: visible;
-  text-overflow: unset:
+  text-overflow: unset;
   white-space: normal;
 
 }
@@ -1010,6 +954,30 @@ div:empty {
   display: none;
 }
 section{
-  margin-bottom: 0  !important;
-padding-bottom:10px !important;
+  margin-bottom: 20px;
+  padding-bottom: 0;
+}
+.hero {
+  position: relative;
+  height: 400px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-size: cover;
+  background-position: center;
+
+  animation: bgSlide 20s infinite;
+  will-change: background-image;
+background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+@keyframes bgSlide {
+  0%   { background-image: url("bcg.jpg"); }
+  25%  { background-image: url("studytime.jpg"); }
+  50%  { background-image: url("founder-desk.jpg"); }
+  75%  { background-image: url("foodtime.jpg"); }
+  100% { background-image: url("bcg.jpg"); }
 }

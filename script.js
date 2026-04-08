@@ -1,166 +1,171 @@
 document.addEventListener("DOMContentLoaded", function(){
-  /* OTHER CONTRIBUTION FORM 🔥 */
+
+/* ================= DONATION FORM ================= */
 const otherForm = document.getElementById("otherForm");
 
-if(otherForm){
-  otherForm.addEventListener("submit", function(e){
-    e.preventDefault();
 
-    const item = document.getElementById("itemSelect").value;
-    const itemName = document.querySelector('#itemNameBox input')?.value || "";
-    const quantity = document.querySelector('input[type="number"]').value;
-    const name = document.querySelector('input[placeholder="Donor Name"]').value;
-    const phone = document.querySelector('input[placeholder="Contact Number"]').value;
+otherForm.addEventListener("submit", function(e){
+  e.preventDefault();
 
-    fetch("http://localhost:5000/donate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        item,
-        itemName,
-        quantity,
-        name,
-        phone
-      })
+  const item = document.getElementById("itemSelect").value;
+  const itemName = document.querySelector('#itemNameBox input')?.value || "";
+  const quantity = document.querySelector('input[type="number"]').value;
+  const name = document.querySelector('input[placeholder="Donor Name"]').value;
+  const phone = document.querySelector('input[placeholder="Contact Number"]').value;
+
+  fetch("http://localhost:5000/donate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      item,
+      itemName,
+      quantity,
+      name,
+      phone
     })
-    .then(res => res.text())
-    .then(data => {
-      alert("Donation Submitted Successfully ✅");
-    })
-    .catch(err => {
-      alert("Error ❌");
-      console.log(err);
-    });
-
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Donation Submitted Successfully ✅");
+  })
+  .catch(err => {
+    alert("Backend not responding ❌");
+    console.log(err);
   });
+});
+
+/* ================= LOGIN ================= */
+const loginForm = document.getElementById("loginForm");
+const msg = document.getElementById("loginMsg");
+const section = document.getElementById("students");
+
+if(loginForm){
+loginForm.addEventListener("submit",(e)=>{
+e.preventDefault();
+
+console.log("LOGIN CLICKED");
+  msg.innerText="Login Successful";
+  section.classList.remove("hidden");
+
+  loadStudents(); // 🔥 backend call
+});
+
+
 }
 
-  const students = [
-    {name:"Anshika Chourasiya", age:8, class:"3rd", gender:"Female"},
-    {name:"Sana Shaikh", age:10, class:"4th", gender:"Female"},
-    {name:"Radhika Chourasiya", age:12, class:"4th", gender:"Female"},
-    {name:"Krishna Ram", age:10, class:"5th", gender:"Male"},
-    {name:"Sachin Rathore", age:12, class:"5th", gender:"Male"},
-    {name:"Devika Yadav", age:12, class:"7th", gender:"Female"},
-    {name:"Rithika Yadav", age:14, class:"8th", gender:"Female"}
-  ];
+/* ================= LOAD STUDENTS ================= */
+function loadStudents() {
+fetch("http://localhost:5000/students")
+.then(res => res.json())
+.then(data => {
+displayStudents(data);
+})
+.catch(err => {
+console.log("Error fetching students:", err);
+});
+}
 
-  function getSurname(name){
-    return name.split(" ").slice(-1)[0];
+/* ================= DISPLAY STUDENTS ================= */
+function displayStudents(students) {
+const grid = document.getElementById("studentsGrid");
+
+
+const males = students.filter(s => s.gender === "Male");
+const females = students.filter(s => s.gender === "Female");
+
+grid.innerHTML = `
+  <div class="student-column">
+    <h3>Male Students</h3>
+    ${males.map(s => `
+      <div class="student-card">
+        <h4>${s.name}</h4>
+        <p>Age: ${s.age}</p>
+        <p>Class: ${s.class}</p>
+      </div>
+    `).join("")}
+  </div>
+
+  <div class="student-column">
+    <h3>Female Students</h3>
+    ${females.map(s => `
+      <div class="student-card">
+        <h4>${s.name}</h4>
+        <p>Age: ${s.age}</p>
+        <p>Class: ${s.class}</p>
+      </div>
+    `).join("")}
+  </div>
+`;
+
+
+}
+
+/* ================= VOLUNTEER FORM ================= */
+const volForm = document.getElementById("volForm");
+if(volForm){
+volForm.addEventListener("submit",(e)=>{
+e.preventDefault();
+document.getElementById("formMsg").innerText="Application Submitted!";
+});
+}
+
+/* ================= NAV ACTIVE ================= */
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".main-nav a");
+
+window.addEventListener("scroll", () => {
+let current = "";
+
+
+sections.forEach(section => {
+  const sectionTop = section.offsetTop;
+  const sectionHeight = section.clientHeight;
+
+  if (
+    pageYOffset >= sectionTop - 150 &&
+    pageYOffset < sectionTop + sectionHeight
+  ) {
+    current = section.getAttribute("id");
   }
-
-  const loginForm = document.getElementById("loginForm");
-  const msg = document.getElementById("loginMsg");
-  const section = document.getElementById("students");
-  const grid = document.getElementById("studentsGrid");
-
-  if(loginForm){
-    loginForm.addEventListener("submit",(e)=>{
-      e.preventDefault();
-
-      msg.innerText="Login Successful";
-      section.classList.remove("hidden");
-
-      students.sort((a,b)=>{
-        return getSurname(a.name).localeCompare(getSurname(b.name));
-      });
-
-      const males = students.filter(s => s.gender === "Male");
-      const females = students.filter(s => s.gender === "Female");
-
-      grid.innerHTML = `
-        <div class="student-column">
-          <h3>Male Students</h3>
-          ${males.map(s => `
-            <div class="student-card">
-              <h4>${s.name}</h4>
-              <p>Age: ${s.age}</p>
-              <p>Class: ${s.class}</p>
-            </div>
-          `).join("")}
-        </div>
-
-        <div class="student-column">
-          <h3>Female Students</h3>
-          ${females.map(s => `
-            <div class="student-card">
-              <h4>${s.name}</h4>
-              <p>Age: ${s.age}</p>
-              <p>Class: ${s.class}</p>
-            </div>
-          `).join("")}
-        </div>
-      `;
-    });
-  }
-
-  /* Volunteer Form */
-  const volForm = document.getElementById("volForm");
-  if(volForm){
-    volForm.addEventListener("submit",(e)=>{
-      e.preventDefault();
-      document.getElementById("formMsg").innerText="Application Submitted!";
-    });
-  }
-
-  /* NAV ACTIVE */
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".main-nav a");
-
-  window.addEventListener("scroll", () => {
-  let current = "";
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-
-    if (
-      pageYOffset >= sectionTop - 150 &&
-      pageYOffset < sectionTop + sectionHeight
-    ) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach(link => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === "#" + current) {
-      link.classList.add("active");
-    }
-  });
 });
 
-  /* ITEM SELECT (MAIN FEATURE 🔥) */
-  const itemSelect = document.getElementById("itemSelect");
-  const itemNameBox = document.getElementById("itemNameBox");
-
-  if(itemSelect){
-    itemSelect.addEventListener("change", function(){
-
-      console.log("Selected:", this.value);
-
-      if(this.value === "Other"){
-        itemNameBox.style.display = "block";
-      } else {
-        itemNameBox.style.display = "none";
-      }
-
-    });
+navLinks.forEach(link => {
+  link.classList.remove("active");
+  if (link.getAttribute("href") === "#" + current) {
+    link.classList.add("active");
   }
+});
+
 
 });
 
-/* OUTSIDE (OK) */
+/* ================= ITEM SELECT ================= */
+const itemSelect = document.getElementById("itemSelect");
+const itemNameBox = document.getElementById("itemNameBox");
+
+if(itemSelect){
+itemSelect.addEventListener("change", function(){
+if(this.value === "Other"){
+itemNameBox.style.display = "block";
+} else {
+itemNameBox.style.display = "none";
+}
+});
+}
+
+});
+
+/* ================= OUTSIDE FUNCTIONS ================= */
 function toggleMode(){
-  document.body.classList.toggle("dark");
+document.body.classList.toggle("dark");
 }
 
 function toggleMenu(){
-  document.querySelector(".main-nav").classList.toggle("show");
+document.querySelector(".main-nav").classList.toggle("show");
 }
 
 window.onload = function(){
-  window.scrollTo(0,0);
+window.scrollTo(0,0);
 }
