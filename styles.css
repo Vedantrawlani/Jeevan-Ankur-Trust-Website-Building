@@ -512,7 +512,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 /* ADD THIS NEW */
@@ -732,8 +732,8 @@ section {
   display: flex;
   align-items: center;
   gap: 30px;
-  padding-bottom: 0;
-  margin-bottom: 0;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 /* TEXT */
@@ -1004,4 +1004,12 @@ p{
   text-overflow: unset:
   white-space: normal;
 
+}
+p:empty,
+div:empty {
+  display: none;
+}
+section{
+  margin-bottom: 0  !important;
+padding-bottom:10px !important;
 }
