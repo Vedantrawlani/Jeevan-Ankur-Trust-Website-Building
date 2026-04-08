@@ -1,4 +1,41 @@
 document.addEventListener("DOMContentLoaded", function(){
+  /* OTHER CONTRIBUTION FORM 🔥 */
+const otherForm = document.getElementById("otherForm");
+
+if(otherForm){
+  otherForm.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const item = document.getElementById("itemSelect").value;
+    const itemName = document.querySelector('#itemNameBox input')?.value || "";
+    const quantity = document.querySelector('input[type="number"]').value;
+    const name = document.querySelector('input[placeholder="Donor Name"]').value;
+    const phone = document.querySelector('input[placeholder="Contact Number"]').value;
+
+    fetch("http://localhost:5000/donate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        item,
+        itemName,
+        quantity,
+        name,
+        phone
+      })
+    })
+    .then(res => res.text())
+    .then(data => {
+      alert("Donation Submitted Successfully ✅");
+    })
+    .catch(err => {
+      alert("Error ❌");
+      console.log(err);
+    });
+
+  });
+}
 
   const students = [
     {name:"Anshika Chourasiya", age:8, class:"3rd", gender:"Female"},
@@ -123,6 +160,7 @@ function toggleMode(){
 function toggleMenu(){
   document.querySelector(".main-nav").classList.toggle("show");
 }
+
 window.onload = function(){
   window.scrollTo(0,0);
 }
