@@ -169,3 +169,15 @@ document.querySelector(".main-nav").classList.toggle("show");
 window.onload = function(){
 window.scrollTo(0,0);
 }
+function toggleProfileMenu(){
+  const menu = document.getElementById("profileMenu");
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+function openLogin(){
+  document.getElementById("student-login").classList.remove("hidden");
+  window.scrollTo({
+    top: document.getElementById("student-login").offsetTop,
+    behavior: "smooth"
+  });
+}

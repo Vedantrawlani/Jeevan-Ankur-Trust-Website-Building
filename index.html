@@ -17,6 +17,14 @@
 <div id="loader" class="loader hidden">Loading...</div>
 <header class="site-header">
   <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <!-- 👤 PROFILE ICON -->
+  <div class="profile-container">
+    <img src="profile.jpg" class="profile-icon" onclick="toggleProfileMenu()">
+
+    <div class="profile-dropdown" id="profileMenu">
+      <a href="#" onclick="openLogin()">Admin Login</a>
+    </div>
+  </div>
 
   <div class="left">
     <img src="logo.png" class="logo-img">
@@ -98,7 +106,8 @@
 </section>
 
 <!-- LOGIN -->
- <section id="student-login" class="card login-card">
+
+  <section id="student-login" class="card login-card hidden">
   <h2>🔐 Admin Login</h2>
   <p class="login-sub">Access student details securely</p>
 

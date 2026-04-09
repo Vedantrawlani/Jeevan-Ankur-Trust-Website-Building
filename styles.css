@@ -778,8 +778,8 @@ section {
   cursor: pointer;
 
   position: absolute;
-  right: 20px;   /* 👉 moves to right */
-  top: 20px;     /* 👉 adjust vertically */
+  right: 15px;   /* 👉 moves to right */
+  top: 15px;     /* 👉 adjust vertically */
 
   display: none;
 }
@@ -796,7 +796,7 @@ section {
     background: none;
     border: none;
     cursor: pointer;
-    margin-top: 10px;
+    
   }
   .menu-toggle:hover {
   color: #ff9800;
@@ -980,4 +980,56 @@ background-size: cover;
   50%  { background-image: url("founder-desk.jpg"); }
   75%  { background-image: url("foodtime.jpg"); }
   100% { background-image: url("bcg.jpg"); }
+}
+/* PROFILE ICON */
+.profile-container {
+  position: absolute;
+  right: 55px; /* ☰ ke left me */
+  top: 15px;
+}
+
+.profile-icon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* DROPDOWN */
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.profile-dropdown a {
+  text-decoration: none;
+  color: black;
+  display: block;
+  padding: 8px;
+}
+
+.profile-dropdown a:hover {
+  background: orange;
+  color: white;
+}
+
+/* MOBILE FIX */
+@media (max-width:768px){
+  .profile-container {
+    right: 50px;
+    top: 15px;
+  }
+}
+.profile-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;   /* 🔥 important */
+  cursor: pointer;
 }
