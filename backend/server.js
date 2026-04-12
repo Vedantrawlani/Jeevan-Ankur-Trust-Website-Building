@@ -27,7 +27,8 @@ app.listen(5000, () => {
   console.log("Server running on http://localhost:5000");
 });
 let students = [
-  { name: "Anshika", age: 8, class: "3rd", gender: "Female" }
+  { name: "Anshika", age: 8, class: "3rd", gender: "Female" },
+  { name: "Rahul", age: 10, class: "5th", gender: "Male" }
 ];
 app.get("/students", (req, res) => {
   res.json(students);

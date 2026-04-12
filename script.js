@@ -1,3 +1,4 @@
+console.log("JS Loaded");
 document.addEventListener("DOMContentLoaded", function(){
 
 /* ================= DONATION FORM ================= */
@@ -41,19 +42,20 @@ const loginForm = document.getElementById("loginForm");
 const msg = document.getElementById("loginMsg");
 const section = document.getElementById("students");
 
-if(loginForm){
-loginForm.addEventListener("submit",(e)=>{
-e.preventDefault();
+if (loginForm) {
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-console.log("LOGIN CLICKED");
-  msg.innerText="Login Successful";
-  section.classList.remove("hidden");
+    console.log("LOGIN CLICKED ✅");
 
-  loadStudents(); // 🔥 backend call
-});
+    msg.innerText = "Login Successful";
+    section.classList.remove("hidden");
 
-
+    loadStudents();
+  });
 }
+
+
 
 /* ================= LOAD STUDENTS ================= */
 function loadStudents() {
