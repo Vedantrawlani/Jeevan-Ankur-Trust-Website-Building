@@ -96,15 +96,17 @@
 
 
 <!-- MEDIA -->
-<section id="media" class="card">
+<section id="media" class="card hidden">
   <h2>Media Gallery</h2>
-  <div class="media-grid">
-    <img src="foodtime.jpg">
-    <img src="studytime.jpg">
-    <img src="founder-desk.jpg">
+
+  <div class="slider">
+    <button onclick="prevSlide()">⬅</button>
+
+    <img id="sliderImage" src="foodtime.jpg">
+
+    <button onclick="nextSlide()">➡</button>
   </div>
 </section>
-
 <!-- LOGIN -->
 
   <section id="student-login" class="card login-card hidden">

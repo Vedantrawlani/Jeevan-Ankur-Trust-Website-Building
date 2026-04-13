@@ -183,3 +183,35 @@ function openLogin(){
     behavior: "smooth"
   });
 }
+// MEDIA TOGGLE
+const mediaSection = document.getElementById("media");
+
+document.querySelector('a[href="#media"]').addEventListener("click", function(e){
+  e.preventDefault();
+
+  mediaSection.classList.remove("hidden");
+
+  window.scrollTo({
+    top: mediaSection.offsetTop,
+    behavior: "smooth"
+  });
+});
+const images = ["foodtime.jpg", "studytime.jpg", "founder-desk.jpg"];
+let index = 0;
+
+function showImage(){
+  document.getElementById("sliderImage").src = images[index];
+}
+
+function nextSlide(){
+  index = (index + 1) % images.length;
+  showImage();
+}
+
+function prevSlide(){
+  index = (index - 1 + images.length) % images.length;
+  showImage();
+}
+document.getElementById("sliderImage").addEventListener("click", function(){
+  nextSlide();
+});
