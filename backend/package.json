@@ -1,15 +1,17 @@
 {
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.5.0",
+    "razorpay": "^2.9.6"
   },
   "name": "jeevan-ankur-trust",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
- "scripts": {
-  "start": "node server.js"
-},
+  "scripts": {
+    "start": "node server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Vedantrawlani/Jeevan-Ankur-Trust-Website-Building.git"

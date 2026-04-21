@@ -143,12 +143,19 @@
   <p>Your support helps children and senior citizens.</p>
 
   <div class="donation-box">
+    <!-- ADD THIS BELOW donation-box -->
+
+
+
     <p><strong>Account Name:</strong> JEEVAN ANKUR TRUST</p>
     <p><strong>Bank:</strong> HDFC</p>
     <p><strong>Account No:</strong> 50200073171717</p>
     <p><strong>IFSC:</strong> HDFC0000013</p>
      <p><strong>Branch:</strong> CHEMBUR CENTRAL AVENUE</p>
       <p><strong>Account Type:</strong> Current</p>
+        <button class="btn-primary" onclick="payNow()" style="margin-top:20px;">
+    Pay Now
+  </button>
   </div>
 </section>
 <div id="other" class="card">
@@ -298,5 +305,7 @@ window.addEventListener('scroll', () => {
 
 
 <script src="script.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 </html>

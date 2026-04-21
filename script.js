@@ -215,3 +215,44 @@ function prevSlide(){
 document.getElementById("sliderImage").addEventListener("click", function(){
   nextSlide();
 });
+function payNow() {
+
+  fetch("http://localhost:5000/create-order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ amount: 500 }) // ₹500 fixed for now
+  })
+  .then(res => res.json())
+  .then(order => {
+
+    const options = {
+      key: "YOUR_RAZORPAY_KEY_ID",  // 🔥 change this
+      amount: order.amount,
+      currency: "INR",
+      name: "Jeevan Ankur Trust",
+      description: "Donation",
+      order_id: order.id,
+
+      handler: function (response) {
+        alert("Payment Successful ✅");
+        console.log(response);
+      },
+
+      theme: {
+        color: "#f58529"
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Payment Failed ❌");
+  });
+}
+function payNow() {
+  alert("Button clicked ✅");
+}

@@ -1,5 +1,12 @@
+
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+const Razorpay = require("razorpay");
+
+const student = require("./models/student");
+const otherdonation = require("./models/otherdonation");
+const payment = require("./models/payment");
 
 const app = express();
 
@@ -7,103 +14,90 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+// routes
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 // routes
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
+// 🔥 ADD HERE
+app.get("/add-demo", async (req, res) => {
+  await student.create({
+    name: "Test Student",
+    age: 10,
+    class: "5th",
+    gender: "Male"
+  });
+
+  res.send("Student Added");
+});
 app.post("/volunteer", (req, res) => {
   console.log("Volunteer Data:", req.body);
   res.send("Form data received");
 });
+// ✅ Students from DB
+app.get("/students", async (req, res) => {
+  const data = await student.find();
+  res.json(data);
+});
 
-app.post("/donate", (req, res) => {
-  console.log("Donation Data:", req.body);
-  res.send("Donation received");
+
+
+// ✅ Other Donation save
+app.post("/donate", async (req, res) => {
+  await otherdonation.create(req.body);
+  res.send("Donation Saved ✅");
 });
 
 // server start
 app.listen(5000, () => {
   console.log("Server running on http://localhost:5000");
 });
-let students = [
-  { name: "Anshika", age: 8, class: "3rd", gender: "Female" },
-  { name: "Rahul", age: 10, class: "5th", gender: "Male" },
-  { name: "Pooja More", age: 7, class: "2nd", gender: "Female" },
-{ name: "Khushi Pathare", age: 8, class: "4th", gender: "Female" },
-{ name: "Sakshi Dhrup Prakash Chourasiya", age: 11, class: "4th", gender: "Female" },
-{ name: "Srushti Kharatmol", age: 9, class: "3rd", gender: "Female" },
-{ name: "Purva Waghmare", age: 11, class: "4th", gender: "Female" },
-{ name: "Ifat Lokhandwala", age: 8, class: "3rd", gender: "Female" },
-{ name: "Aaradhya Santosh Gupta", age: 8, class: "2nd", gender: "Female" },
-{ name: "Sana Shaikh", age: 10, class: "4th", gender: "Female" },
-{ name: "Sahista Jubair Ahmed Khan", age: 10, class: "3rd", gender: "Female" },
-{ name: "Fathima Sakeel Pathan", age: 12, class: "6th", gender: "Female" },
-{ name: "Sagira Anzar Ansari", age: 8, class: "3rd", gender: "Female" },
-{ name: "Shradha Vinod Ram", age: 9, class: "4th", gender: "Female" },
-{ name: "Saloni Vinod Patwa", age: 6, class: "1st", gender: "Female" },
-{ name: "Priti Pramod Ram", age: 4, class: "N/A", gender: "Female" },
-{ name: "Deepti Dhrup Prakash Chourasiya", age: 9, class: "3rd", gender: "Female" },
-{ name: "Anamika Sunil Chaurasiya", age: 7, class: "1st", gender: "Female" },
-{ name: "Mansi Vijay Yadav", age: 9, class: "4th", gender: "Female" },
-{ name: "Anshika Jitendra Mourya", age: 9, class: "3rd", gender: "Female" },
-{ name: "Shraddha Vinod Ram", age: 10, class: "4th", gender: "Female" },
-{ name: "Gauri Sunil Pawar", age: 12, class: "3rd", gender: "Female" },
-{ name: "Anjali Gupta", age: 7, class: "2nd", gender: "Female" },
-{ name: "Sana Sikander Shaikh", age: 10, class: "3rd", gender: "Female" },
 
-{ name: "Anubhav Shankar Sharma", age: 8, class: "3rd", gender: "Male" },
-{ name: "Anurag Shankar Sharma", age: 8, class: "3rd", gender: "Male" },
-{ name: "Ranveer Rajesh Prajapati", age: 8, class: "3rd", gender: "Male" },
-{ name: "Nithin Bhane Kumar Pal", age: 10, class: "3rd", gender: "Male" },
-{ name: "Naveen Bhane Kumar Pal", age: 9, class: "2nd", gender: "Male" },
-{ name: "Krishna Kumar Promod Ram", age: 10, class: "5th", gender: "Male" },
-{ name: "Karan Promod Ram", age: 8, class: "3rd", gender: "Male" },
-{ name: "Sunny Kumar Sharma", age: 1, class: "6th", gender: "Male" },
-{ name: "Noman Jubair Ahmed Shaikh", age: 6, class: "1st", gender: "Male" },
-{ name: "Avinash", age: 10, class: "4th", gender: "Male" },
-{ name: "Arun", age: 11, class: "4th", gender: "Male" },
-{ name: "Krishna Gupta", age: 12, class: "5th", gender: "Male" },
-{ name: "Mustafa Shaikh", age: 8, class: "2nd", gender: "Male" },
-{ name: "Sujit", age: 10, class: "1st", gender: "Male" },
-{ name: "Sachin Rathore", age: 12, class: "5th", gender: "Male" },
-{ name: "Ayan Jubair Ahmed Khan", age: 13, class: "5th", gender: "Male" },
-{ name: "Abhinandan Kumar", age: 10, class: "2nd", gender: "Male" },
-{ name: "Md. Harsh Gufran", age: 9, class: "3rd", gender: "Male" },
-{ name: "Md. Hasad Gufran", age: 11, class: "4th", gender: "Male" },
-{ name: "Heeresh", age: 13, class: "5th", gender: "Male" },
-{ name: "Saksham Dhruv Prakash", age: 13, class: "4th", gender: "Male" },
-{ name: "Aadharsh Chaurasiya", age: 10, class: "5th", gender: "Male" },
-{ name: "Aman Ali Qureshi", age: 9, class: "2nd", gender: "Male" },
-{ name: "Sameer Sikander Shaikh", age: 12, class: "4th", gender: "Male" },
-// ===== PRE-SCHOOL FEMALE =====
-{ name: "Priyanshi Bhane Kumar Pal", age: 4, class: "Play School", gender: "Female" },
-{ name: "Haya MD Jamil Shaikh", age: 4, class: "Play School", gender: "Female" },
-{ name: "Anushka Kumari Kapil Singh", age: 5, class: "Play School", gender: "Female" },
-{ name: "Halima MD Saddam", age: 3, class: "Play School", gender: "Female" },
-{ name: "Zara Khawaja Shaikh", age: 4, class: "Play School", gender: "Female" },
-{ name: "Sabiha Karam Singh", age: 5, class: "Play School", gender: "Female" },
-{ name: "Rasidha Kharib Aburan", age: 4, class: "Play School", gender: "Female" },
-{ name: "Anvi Dubey", age: 4, class: "Play School", gender: "Female" },
-{ name: "Nidhi Kumari", age: 6, class: "Play School", gender: "Female" },
+app.post("/add-student", async (req, res) => {
+  const newStudent = await student.create(req.body);
+  res.json(newStudent);
+});
 
-// ===== FEMALE STUDENTS =====
-{ name: "Devika Vijay Yadav", age: 12, class: "7th", gender: "Female" },
-{ name: "Jyoti Viru Shah", age: 12, class: "7th", gender: "Female" },
-{ name: "Rithika Vijay Yadav", age: 14, class: "8th", gender: "Female" },
-{ name: "Babli Kumari Viru Shah", age: 13, class: "9th", gender: "Female" },
-{ name: "Sangeetha Kumari Viru Shah", age: 11, class: "6th", gender: "Female" },
-{ name: "Heena Akhtar Shaikh", age: 11, class: "6th", gender: "Female" },
-{ name: "Nandini Shankar Sharma", age: 14, class: "9th", gender: "Female" },
-{ name: "Sonali Shankar Sharma", age: 12, class: "7th", gender: "Female" },
-{ name: "Anjum Shaikh", age: 14, class: "9th", gender: "Female" },
-{ name: "Saheen Shaikh", age: 11, class: "7th", gender: "Female" },
-];
-app.get("/students", (req, res) => {
-  res.json(students);
+
+const razorpay = new Razorpay({
+  key_id: "YOUR_KEY_ID",
+  key_secret: "YOUR_KEY_SECRET"
 });
-app.post("/add-student", (req, res) => {
-  const newStudent = req.body;
-  students.push(newStudent);
-  res.send("Student added");
+app.post("/create-order", async (req, res) => {
+  const { amount } = req.body;
+
+  const options = {
+    amount: amount * 100, // ₹ to paise
+    currency: "INR",
+    receipt: "receipt_" + Date.now()
+  };
+
+  try {
+    const order = await razorpay.orders.create(options);
+    res.json(order);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error creating order");
+  }
 });
+app.post("/verify-payment", async (req, res) => {
+  const { name, amount, razorpay_payment_id, razorpay_order_id } = req.body;
+
+  await payment.create({
+    name,
+    amount,
+    paymentId: razorpay_payment_id,
+    orderId: razorpay_order_id,
+    status: "success"
+  });
+
+  res.json({ message: "Payment Saved ✅" });
+});
+mongoose.connect("mongodb://vedantrawlani1_db_user:abcdEFG123@ac-vzfcgqd-shard-00-00.9ipzeyw.mongodb.net:27017,ac-vzfcgqd-shard-00-01.9ipzeyw.mongodb.net:27017,ac-vzfcgqd-shard-00-02.9ipzeyw.mongodb.net:27017/?ssl=true&replicaSet=atlas-4sextd-shard-0&authSource=admin&appName=Vedantrawlani")
+  .then(() => console.log("MongoDB Connected ✅"))
+  .catch(err => console.log(err));
