@@ -1,5 +1,6 @@
 console.log("JS Loaded");
 document.addEventListener("DOMContentLoaded", function(){
+ // loadOtherDonations();
 
 /* ================= DONATION FORM ================= */
 const otherForm = document.getElementById("otherForm");
@@ -228,7 +229,7 @@ function payNow() {
   .then(order => {
 
     const options = {
-      key: "YOUR_RAZORPAY_KEY_ID",  // 🔥 change this
+      key: "rzp_test_xxxxx",  // 🔥 change this
       amount: order.amount,
       currency: "INR",
       name: "Jeevan Ankur Trust",
@@ -253,6 +254,29 @@ function payNow() {
     alert("Payment Failed ❌");
   });
 }
-function payNow() {
-  alert("Button clicked ✅");
-}
+/*function loadOtherDonations() {
+  fetch("http://localhost:5000/other-donations")
+    .then(res => res.json())
+    .then(data => {
+      console.log("Other Donations:", data);
+
+      const container = document.getElementById("otherList");
+
+      if (!container) return;
+
+      container.innerHTML = "";
+
+      data.forEach(d => {
+        const div = document.createElement("div");
+        div.classList.add("student-card");
+
+        div.innerHTML = `
+          <h4>${d.item} (${d.quantity})</h4>
+          <p>Item Name: ${d.itemName || "-"}</p>
+          <p>Donor: ${d.name}</p>
+          <p>Phone: ${d.phone}</p>
+        `;
+
+        container.appendChild(div);
+      });
+    });*/

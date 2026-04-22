@@ -13,9 +13,9 @@ body {
 
   background: linear-gradient(
     135deg,
-    #fff7ed,
-    #fef3c7,
-    #ecfeff
+   #fff3e0 0%,
+  #fef9c3 40%,
+  #e0f7fa 100%
   );
 
   min-height: 100vh;
@@ -190,22 +190,29 @@ a.btn-primary {
   color: green;
 }
 section {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
 }
 /* CARDS */
 
 /* 🔥 PREMIUM CARD DESIGN */
 .card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 24px;
 
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-
+  box-shadow: 0 4px 20px rgba(245,133,41,0.08), 0 1px 4px rgba(0,0,0,0.06);
+border: 1px solid rgba(245, 133, 41, 0.12);
   margin-bottom: 25px;   /* 🔥 ADD THIS LINE */
 
   transition: all 0.3s ease;
+   margin-left: 0;
+  margin-right: 0;
+}
+body.dark .card {
+  background: #1f2937 !important;   /* dark grey */
+  color: white;
 }
 
 /* HOVER EFFECT */
@@ -274,6 +281,10 @@ section {
   padding: 10px;
   border-radius: 10px;
 }
+body.dark .donation-box {
+  background: #1f2937 !important;
+  color: white;
+}
 
 /* CONTACT */
 .contact-grid {
@@ -333,7 +344,7 @@ section {
 .footer {
   text-align: center;
   padding: 10px;
-  background: #f3f3f3;
+  background: transparent !important;
 }
 
 /* MOBILE */
@@ -667,6 +678,7 @@ section {
   border-radius: 6px;
   margin-bottom: 15px;
   font-size: 14px;
+  color: #111;
 }
 .input-box select {
   width: 100%;
@@ -954,8 +966,11 @@ div:empty {
   display: none;
 }
 section{
-  margin-bottom: 20px;
-  padding-bottom: 0;
+  margin-bottom: 40px;
+  padding-bottom: 0px;
+}
+.section-gap{
+  margin-top: 30px;
 }
 .hero {
   position: relative;
@@ -1078,4 +1093,45 @@ background-size: cover;
 /* HOVER */
 .slider button:hover {
   background: orange;
+}
+/* 🔥 OTHER DONATION FORM FIX */
+#otherForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;           /* spacing between inputs */
+  margin-top: 20px;
+  margin-bottom: 40px;
+  max-width: 400px;
+}
+
+/* INPUT + SELECT */
+#otherForm input,
+#otherForm select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+/* BUTTON */
+#otherForm button {
+  margin-top: 10px;
+}
+#other {
+  margin-bottom: 50px;
+}
+body.dark input,
+body.dark select {
+  background: #111;
+  color: white;
+  border: 1px solid #444;
+}
+body.dark .other-note {
+  background: #1e293b;
+  color: #e2e8f0;   /* light text */
+  border-left: 4px solid #38bdf8;
+}
+section {
+  padding-left: 20px;
+  padding-right: 20px;
 }
