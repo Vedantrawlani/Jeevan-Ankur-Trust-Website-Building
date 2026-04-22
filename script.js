@@ -15,7 +15,7 @@ otherForm.addEventListener("submit", function(e){
   const name = document.querySelector('input[placeholder="Donor Name"]').value;
   const phone = document.querySelector('input[placeholder="Contact Number"]').value;
 
-  fetch("https://your-render-url.onrender.com/donate", {
+  fetch("https://jeevan-ankur-trust-website-building.onrender.com/donate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -60,7 +60,7 @@ if (loginForm) {
 
 /* ================= LOAD STUDENTS ================= */
 function loadStudents() {
-fetch("http://localhost:5000/students")
+fetch("https://jeevan-ankur-trust-website-building.onrender.com/students")
 .then(res => res.json())
 .then(data => {
 displayStudents(data);
@@ -218,7 +218,7 @@ document.getElementById("sliderImage").addEventListener("click", function(){
 });
 function payNow() {
 
-  fetch("http://localhost:5000/create-order", {
+  fetch("https://jeevan-ankur-trust-website-building.onrender.com/create-order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -279,4 +279,5 @@ function payNow() {
 
         container.appendChild(div);
       });
-    });*/
+
+      });*/
