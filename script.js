@@ -15,7 +15,7 @@ otherForm.addEventListener("submit", function(e){
   const name = document.querySelector('input[placeholder="Donor Name"]').value;
   const phone = document.querySelector('input[placeholder="Contact Number"]').value;
 
-  fetch("http://localhost:5000/donate", {
+  fetch("https://your-render-url.onrender.com/donate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
