@@ -1,0 +1,70 @@
+[{
+  "_id": {
+    "$oid": "69e8d934af00f4604ea44421"
+  },
+  "item": "Stationery",
+  "itemName": "",
+  "quantity": 5,
+  "name": "Vedant",
+  "phone": "9284390254",
+  "date": {
+    "$date": "2026-04-22T14:20:36.122Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8d94eaf00f4604ea44422"
+  },
+  "item": "Clothes",
+  "itemName": "",
+  "quantity": 5,
+  "name": "Vijay",
+  "phone": "9284390254",
+  "date": {
+    "$date": "2026-04-22T14:21:02.102Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8dc2944ff626427baa543"
+  },
+  "item": "Books",
+  "itemName": "",
+  "quantity": 5,
+  "name": "Akshay",
+  "phone": "87999999987",
+  "date": {
+    "$date": "2026-04-22T14:33:13.351Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8ede2df85c78a4a83f465"
+  },
+  "item": "Books",
+  "itemName": "",
+  "quantity": 1,
+  "name": "Piyush",
+  "phone": "222",
+  "date": {
+    "$date": "2026-04-22T15:48:50.073Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e9ecc1daa3120f68e9c7c7"
+  },
+  "item": "Other",
+  "itemName": "Wheat",
+  "quantity": 2,
+  "name": "Vedant",
+  "phone": "9277788999",
+  "date": {
+    "$date": "2026-04-23T09:56:17.436Z"
+  },
+  "__v": 0
+}]

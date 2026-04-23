@@ -9,6 +9,16 @@ const otherdonation = require("./models/otherdonation");
 const payment = require("./models/payment");
 
 const app = express();
+const { v4: uuidv4 } = require("uuid");
+
+// Temporary admin (you can later move to DB)
+let admin = {
+  email: "admin@gmail.com",
+  password: "123456"
+};
+
+// Store reset tokens
+let resetTokens = {};
 
 // middleware
 app.use(cors());
@@ -928,6 +938,44 @@ app.get("/other-donations", async (req, res) => {
 });
 
 // server start
+// ================= FORGOT PASSWORD =================
+
+// Forgot Password API
+app.post("/forgot-password", (req, res) => {
+  const { email } = req.body;
+
+  if (email !== admin.email) {
+    return res.json({ message: "Email not found" });
+  }
+
+  const token = uuidv4();
+  resetTokens[token] = email;
+
+  const resetLink = `http://localhost:5500/reset.html?token=${token}`;
+
+  console.log("Reset Link:", resetLink);
+
+  res.json({
+    message: "Reset link generated! Check terminal."
+  });
+});
+
+// Reset Password API
+app.post("/reset-password", (req, res) => {
+  const { token, newPassword } = req.body;
+
+  const email = resetTokens[token];
+
+  if (!email) {
+    return res.json({ message: "Invalid or expired token" });
+  }
+
+  admin.password = newPassword;
+
+  delete resetTokens[token];
+
+  res.json({ message: "Password updated successfully!" });
+});
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

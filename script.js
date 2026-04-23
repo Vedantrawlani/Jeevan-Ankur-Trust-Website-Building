@@ -42,20 +42,23 @@ otherForm.addEventListener("submit", function(e){
 const loginForm = document.getElementById("loginForm");
 const msg = document.getElementById("loginMsg");
 const section = document.getElementById("students");
+const allowedEmail = "jeevanankur226@gmail.com";
+const allowedPassword = "jeevan@123";
 
-if (loginForm) {
-  loginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+loginForm.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    console.log("LOGIN CLICKED ✅");
+  const email = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    msg.innerText = "Login Successful";
+  if (email === allowedEmail && password === allowedPassword) {
+    msg.innerText = "Login Successful ✅";
     section.classList.remove("hidden");
-
     loadStudents();
-  });
-}
-
+  } else {
+    msg.innerText = "Invalid Email or Password ❌";
+  }
+});
 
 
 /* ================= LOAD STUDENTS ================= */
@@ -281,3 +284,22 @@ function payNow() {
       });
 
       });*/
+function showForgot() {
+    document.getElementById("forgotBox").style.display = "block";
+}
+
+function sendReset() {
+    const email = document.getElementById("forgotEmail").value;
+
+    fetch("https://jeevan-ankur-trust-website-building.onrender.com/forgot-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+    });
+}
